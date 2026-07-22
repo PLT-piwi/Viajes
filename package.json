@@ -7,7 +7,8 @@
   "main": "electron/main.cjs",
   "scripts": {
     "start": "electron .",
-    "dist:win": "electron-builder --win --x64 --publish never"
+    "dist:win": "electron-builder --win --x64 --publish never",
+    "dist:mac": "electron-builder --mac --publish never"
   },
   "devDependencies": {
     "electron": "^33.4.11",
@@ -48,6 +49,22 @@
       "allowToChangeInstallationDirectory": true,
       "installerLanguages": ["es_ES", "en_US"],
       "language": "3082"
+    },
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.travel",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ]
+    },
+    "dmg": {
+      "contents": [
+        { "x": 130, "y": 220 },
+        { "x": 410, "y": 220, "type": "link", "path": "/Applications" }
+      ]
     }
   }
 }
