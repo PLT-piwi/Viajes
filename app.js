@@ -11,7 +11,7 @@ const CATEGORIES = [
   { id: 'otro',            label: 'Otro' },
 ];
 const CAT_COLORS = {
-  pasajes: '#3b82f6', arriendo: '#f59e0b', comida: '#22c55e',
+  pasajes: '#5C769A', arriendo: '#f59e0b', comida: '#22c55e',
   transporte: '#6366f1', entretenimiento: '#ec4899', extras: '#a855f7', otro: '#94a3b8',
 };
 
