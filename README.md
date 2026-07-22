@@ -33,3 +33,8 @@ npm run dist:win
 ```
 
 > Nota: los datos del navegador y los de la app de escritorio se guardan por separado.
+
+## Dónde se guardan los datos
+
+- **Navegador**: en localStorage del navegador.
+- **App de escritorio**: en `%APPDATA%\Comparador de Viajes\viajes-data.json` (archivo de texto que puedes respaldar o copiar a otro PC). La app solo permite una instancia abierta a la vez; si la abres de nuevo, se enfoca la ventana existente.

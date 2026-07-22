@@ -15,18 +15,40 @@ const CAT_COLORS = {
   transporte: '#6366f1', entretenimiento: '#ec4899', extras: '#a855f7', otro: '#94a3b8',
 };
 
-let state = load();
+// En escritorio (Electron) los datos se guardan en un archivo JSON vía preload;
+// en el navegador se usa localStorage.
+const isDesktop = typeof window.desktopStore !== 'undefined';
+
+let state = { trips: [] };
 let currentTripId = null;
 
-function load() {
+function loadLocal() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw);
   } catch (e) { /* datos corruptos: se parte de cero */ }
-  return { trips: [] };
+  return null;
+}
+async function initState() {
+  if (isDesktop) {
+    let data = null;
+    try { data = await window.desktopStore.load(); } catch (e) { /* sin archivo aún */ }
+    if (!data) {
+      // Migración: rescatar datos de versiones antiguas que usaban localStorage
+      data = loadLocal();
+      if (data) window.desktopStore.save(data);
+    }
+    state = data || { trips: [] };
+  } else {
+    state = loadLocal() || { trips: [] };
+  }
 }
 function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  if (isDesktop) {
+    window.desktopStore.save(state);
+  } else {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
 }
 function uid() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -357,4 +379,4 @@ document.addEventListener('keydown', e => {
 
 // ==================== Inicio ====================
 document.getElementById('footer-year').textContent = new Date().getFullYear();
-renderTrips();
+initState().then(renderTrips);
