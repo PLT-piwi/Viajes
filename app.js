@@ -356,4 +356,5 @@ document.addEventListener('keydown', e => {
 });
 
 // ==================== Inicio ====================
+document.getElementById('footer-year').textContent = new Date().getFullYear();
 renderTrips();
