@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparador de Viajes</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <h1>✈️ Comparador de Viajes</h1>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="viajes" onclick="showTab('viajes')">Mis viajes</button>
+    <button class="tab-btn" data-tab="comparar" onclick="showTab('comparar')">Comparar</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ============ TAB: VIAJES (lista) ============ -->
+  <section id="tab-viajes">
+    <div class="card">
+      <h2>Nuevo viaje</h2>
+      <form id="trip-form" class="form-row">
+        <div class="field">
+          <label for="trip-name">Nombre del viaje *</label>
+          <input id="trip-name" placeholder="Ej: Vacaciones enero" required>
+        </div>
+        <div class="field">
+          <label for="trip-dest">Destino</label>
+          <input id="trip-dest" placeholder="Ej: Buenos Aires">
+        </div>
+        <button type="submit" class="btn-primary">＋ Agregar viaje</button>
+      </form>
+    </div>
+    <div id="trips-list" class="trips-grid"></div>
+    <div id="trips-empty" class="empty" style="display:none">
+      Aún no tienes viajes. Crea el primero con el formulario de arriba. 🌎
+    </div>
+  </section>
+
+  <!-- ============ TAB: DETALLE DE UN VIAJE ============ -->
+  <section id="tab-detalle" style="display:none">
+    <button class="back-link" onclick="showTab('viajes')">← Volver a mis viajes</button>
+    <div class="card">
+      <h2 id="detail-title"></h2>
+      <div id="detail-summary"></div>
+    </div>
+    <div class="card">
+      <h2>Agregar gasto</h2>
+      <form id="expense-form" class="form-row">
+        <div class="field">
+          <label for="exp-desc">Descripción *</label>
+          <input id="exp-desc" placeholder="Ej: Vuelo ida y vuelta" required>
+        </div>
+        <div class="field" style="max-width:200px">
+          <label for="exp-cat">Categoría</label>
+          <select id="exp-cat"></select>
+        </div>
+        <div class="field" style="max-width:160px">
+          <label for="exp-amount">Monto *</label>
+          <input id="exp-amount" type="number" min="0" step="any" placeholder="0" required>
+        </div>
+        <button type="submit" class="btn-primary">＋ Agregar</button>
+      </form>
+    </div>
+    <div class="card">
+      <h2>Gastos</h2>
+      <div class="compare-table-wrap">
+        <table id="expenses-table">
+          <thead>
+            <tr><th>Descripción</th><th>Categoría</th><th class="num">Monto</th><th style="width:130px"></th></tr>
+          </thead>
+          <tbody id="expenses-body"></tbody>
+        </table>
+      </div>
+      <div id="expenses-empty" class="empty" style="display:none">Sin gastos todavía. Agrega el primero arriba.</div>
+    </div>
+  </section>
+
+  <!-- ============ TAB: COMPARAR ============ -->
+  <section id="tab-comparar" style="display:none">
+    <div class="card">
+      <h2>Comparación de viajes</h2>
+      <div id="compare-bars"></div>
+      <div id="compare-legend" class="legend"></div>
+      <div id="compare-best" class="best-note" style="display:none"></div>
+      <div id="compare-empty" class="empty" style="display:none">Necesitas al menos un viaje con gastos para comparar.</div>
+    </div>
+    <div class="card" id="compare-table-card">
+      <h2>Detalle por categoría</h2>
+      <div class="compare-table-wrap">
+        <table id="compare-table"></table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ MODAL EDITAR ============ -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">Editar</h3>
+    <div id="modal-fields"></div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn-primary" id="modal-save">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
